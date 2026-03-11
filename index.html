@@ -5,559 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABC Technologies</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --bg: #080c14;
-            --surface: #0e1420;
-            --surface2: #141c2e;
-            --accent: #00d4ff;
-            --accent2: #7b5ea7;
-            --text: #e8edf5;
-            --muted: #6b7a99;
-            --border: rgba(255,255,255,0.06);
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-        }
-
-        /* ---- NOISE OVERLAY ---- */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.4;
-        }
-
-        /* ---- NAV ---- */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.2rem 4rem;
-            background: rgba(8,12,20,0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-logo {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.3rem;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-
-        .nav-logo span { color: var(--accent); }
-
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.03em;
-            transition: color 0.2s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px; left: 0;
-            width: 0; height: 1px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--text); }
-        .nav-links a:hover::after { width: 100%; }
-
-        /* ---- HERO ---- */
-        #home {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-glow {
-            position: absolute;
-            width: 600px; height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-        }
-
-        .hero-glow2 {
-            position: absolute;
-            width: 400px; height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(123,94,167,0.1) 0%, transparent 70%);
-            top: 30%; right: 10%;
-            pointer-events: none;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(0,212,255,0.08);
-            border: 1px solid rgba(0,212,255,0.2);
-            padding: 0.4rem 1rem;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            color: var(--accent);
-            letter-spacing: 0.05em;
-            margin-bottom: 2rem;
-            animation: fadeUp 0.6s ease both;
-        }
-
-        .badge::before {
-            content: '';
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            background: var(--accent);
-            box-shadow: 0 0 8px var(--accent);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
-            margin-bottom: 1.5rem;
-            animation: fadeUp 0.6s 0.1s ease both;
-        }
-
-        h1 .line2 {
-            display: block;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-sub {
-            font-size: 1.15rem;
-            color: var(--muted);
-            max-width: 500px;
-            margin: 0 auto 2.5rem;
-            line-height: 1.7;
-            font-weight: 300;
-            animation: fadeUp 0.6s 0.2s ease both;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeUp 0.6s 0.3s ease both;
-        }
-
-        .btn-primary {
-            padding: 0.85rem 2rem;
-            background: var(--accent);
-            color: #080c14;
-            border: none;
-            border-radius: 8px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-primary:hover {
-            background: #33ddff;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0,212,255,0.3);
-        }
-
-        .btn-ghost {
-            padding: 0.85rem 2rem;
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-ghost:hover {
-            border-color: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
-
-        /* ---- SECTIONS ---- */
-        section:not(#home) {
-            padding: 6rem 4rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-        }
-
-        .section-sub {
-            color: var(--muted);
-            font-size: 1rem;
-            line-height: 1.7;
-            max-width: 520px;
-            margin-bottom: 3.5rem;
-        }
-
-        /* DIVIDER */
-        .divider {
-            width: 100%;
-            height: 1px;
-            background: var(--border);
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        /* ---- ABOUT ---- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .about-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: border-color 0.3s, transform 0.3s;
-        }
-
-        .about-card:hover {
-            border-color: rgba(0,212,255,0.2);
-            transform: translateY(-4px);
-        }
-
-        .about-card .icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .about-card h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .about-card p {
-            color: var(--muted);
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-
-        /* ---- SERVICES ---- */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .service-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 3px; height: 0;
-            background: linear-gradient(180deg, var(--accent), var(--accent2));
-            transition: height 0.4s;
-            border-radius: 0 0 3px 0;
-        }
-
-        .service-card:hover::before { height: 100%; }
-        .service-card:hover {
-            border-color: rgba(0,212,255,0.15);
-            transform: translateX(4px);
-        }
-
-        .service-num {
-            font-family: 'Syne', sans-serif;
-            font-size: 0.75rem;
-            color: var(--accent);
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-        }
-
-        .service-card h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .service-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
-
-        /* ---- TEAM ---- */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .team-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .team-card:hover {
-            border-color: rgba(123,94,167,0.3);
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .avatar {
-            width: 72px; height: 72px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin: 0 auto 1.2rem;
-        }
-
-        .team-card h3 {
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-        }
-
-        .team-role {
-            font-size: 0.82rem;
-            color: var(--accent);
-            font-weight: 500;
-        }
-
-        /* ---- CONTACT ---- */
-        .contact-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-
-        .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.2rem 1.5rem;
-        }
-
-        .contact-icon {
-            font-size: 1.4rem;
-            width: 44px; height: 44px;
-            background: rgba(0,212,255,0.08);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .contact-item p { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.2rem; }
-        .contact-item span { font-size: 0.95rem; font-weight: 500; }
-
-        .contact-form { display: flex; flex-direction: column; gap: 1rem; }
-
-        .contact-form input,
-        .contact-form textarea {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem 1.2rem;
-            color: var(--text);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
-            transition: border-color 0.2s;
-            resize: none;
-            outline: none;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            border-color: rgba(0,212,255,0.4);
-        }
-
-        .contact-form textarea { height: 120px; }
-
-        /* ---- FOOTER ---- */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 2rem 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--muted);
-            font-size: 0.85rem;
-        }
-
-        footer .logo {
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        footer .logo span { color: var(--accent); }
-
-        /* ---- ANIMATIONS ---- */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ---- RESPONSIVE ---- */
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem 1.2rem;
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-            .nav-links {
-                gap: 0.8rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .nav-links a { font-size: 0.82rem; }
-
-            #home { padding: 10rem 1.2rem 4rem; }
-
-            h1 { font-size: clamp(2.2rem, 10vw, 3.5rem); }
-
-            .hero-sub { font-size: 0.95rem; padding: 0 0.5rem; }
-
-            .hero-cta { flex-direction: column; align-items: center; }
-            .btn-primary, .btn-ghost { width: 100%; max-width: 280px; text-align: center; }
-
-            section:not(#home) { padding: 4rem 1.2rem; }
-
-            .about-grid,
-            .services-grid,
-            .contact-wrapper { grid-template-columns: 1fr; }
-
-            .team-grid { grid-template-columns: 1fr 1fr; }
-
-            .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
-
-            footer {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-                padding: 1.5rem 1.2rem;
-            }
-
-            .hero-glow { width: 300px; height: 300px; }
-            .hero-glow2 { display: none; }
-        }
-
-        @media (max-width: 400px) {
-            .team-grid { grid-template-columns: 1fr; }
-            .nav-links a { font-size: 0.75rem; }
-        }
-    </style>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-logo">ABC<span>.</span>Tech</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- SCROLL TO TOP -->
+<button id="scrollTop" aria-label="Scroll to top">↑</button>
+
 <!-- NAV -->
-<nav>
+<nav id="navbar">
     <div class="nav-logo">ABC<span>.</span>Tech</div>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#stats">Stats</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#team">Team</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
 </nav>
 
 <!-- HERO -->
 <section id="home">
     <div class="hero-glow"></div>
     <div class="hero-glow2"></div>
-    <div style="position:relative; z-index:1;">
+    <canvas id="particles"></canvas>
+    <div class="hero-content">
         <div class="badge">✦ Innovating Since 2020</div>
         <h1>
             Powering Digital
@@ -567,6 +50,38 @@
         <div class="hero-cta">
             <a href="#contact" class="btn-primary">Get in Touch</a>
             <a href="#services" class="btn-ghost">Our Services</a>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll to explore</span>
+            <div class="scroll-line"></div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATS -->
+<section id="stats">
+    <div class="stats-grid">
+        <div class="stat-item reveal">
+            <div class="stat-num" data-target="150">0</div>
+            <div class="stat-plus">+</div>
+            <p>Projects Delivered</p>
+        </div>
+        <div class="stat-item reveal">
+            <div class="stat-num" data-target="98">0</div>
+            <div class="stat-plus">%</div>
+            <p>Client Satisfaction</p>
+        </div>
+        <div class="stat-item reveal">
+            <div class="stat-num" data-target="40">0</div>
+            <div class="stat-plus">+</div>
+            <p>Happy Clients</p>
+        </div>
+        <div class="stat-item reveal">
+            <div class="stat-num" data-target="5">0</div>
+            <div class="stat-plus">+</div>
+            <p>Years Experience</p>
         </div>
     </div>
 </section>
@@ -614,21 +129,25 @@
             <p class="service-num">01</p>
             <h3>Web Development</h3>
             <p>Full-stack web applications built with modern frameworks like React, Node.js, and Next.js — fast, secure, and scalable.</p>
+            <div class="service-tags"><span>React</span><span>Node.js</span><span>Next.js</span></div>
         </div>
         <div class="service-card reveal">
             <p class="service-num">02</p>
             <h3>Software Development</h3>
             <p>Custom software solutions designed around your business workflows, built to last and easy to maintain.</p>
+            <div class="service-tags"><span>Python</span><span>Java</span><span>C++</span></div>
         </div>
         <div class="service-card reveal">
             <p class="service-num">03</p>
             <h3>Cloud Solutions</h3>
             <p>Infrastructure setup, migration, and management on AWS, Azure, and GCP — optimized for performance and cost.</p>
+            <div class="service-tags"><span>AWS</span><span>Azure</span><span>GCP</span></div>
         </div>
         <div class="service-card reveal">
             <p class="service-num">04</p>
             <h3>IT Consulting</h3>
             <p>Strategic technology guidance to help your team make the right decisions at every stage of growth.</p>
+            <div class="service-tags"><span>Strategy</span><span>Audit</span><span>Roadmap</span></div>
         </div>
     </div>
 </section>
@@ -645,16 +164,86 @@
             <div class="avatar">👨‍💻</div>
             <h3>Rahul Sharma</h3>
             <p class="team-role">Lead Developer</p>
+            <p class="team-bio">5+ years building scalable web apps. React & Node.js specialist.</p>
+            <div class="team-socials">
+                <a href="#" aria-label="LinkedIn">in</a>
+                <a href="#" aria-label="GitHub">gh</a>
+            </div>
         </div>
         <div class="team-card reveal">
             <div class="avatar">🎨</div>
             <h3>Ananya Verma</h3>
             <p class="team-role">UI/UX Designer</p>
+            <p class="team-bio">Creating intuitive, beautiful interfaces that users love to use.</p>
+            <div class="team-socials">
+                <a href="#" aria-label="LinkedIn">in</a>
+                <a href="#" aria-label="Dribbble">dr</a>
+            </div>
         </div>
         <div class="team-card reveal">
             <div class="avatar">📊</div>
             <h3>Amit Patel</h3>
             <p class="team-role">Project Manager</p>
+            <p class="team-bio">Certified PMP with a track record of on-time, on-budget delivery.</p>
+            <div class="team-socials">
+                <a href="#" aria-label="LinkedIn">in</a>
+                <a href="#" aria-label="Twitter">tw</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+    <p class="section-label reveal">Testimonials</p>
+    <h2 class="section-title reveal">What our clients say</h2>
+    <p class="section-sub reveal">Don't just take our word for it — hear from the businesses we've helped grow.</p>
+    <div class="testimonials-slider reveal">
+        <div class="testimonials-track" id="testimonialsTrack">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"ABC Technologies transformed our entire digital infrastructure. The team was professional, fast, and delivered beyond expectations. Highly recommended!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SG</div>
+                    <div>
+                        <strong>Suresh Gupta</strong>
+                        <span>CEO, RetailPro India</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"The web app they built for us handles thousands of daily users without a glitch. Their cloud setup saved us 40% on hosting costs. Exceptional work!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">PM</div>
+                    <div>
+                        <strong>Priya Mehta</strong>
+                        <span>CTO, FinTrack Solutions</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Working with ABC Tech felt like having an in-house team. They understood our vision perfectly and executed it flawlessly. We'll definitely work with them again."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AK</div>
+                    <div>
+                        <strong>Arjun Khanna</strong>
+                        <span>Founder, EduBridge</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <button class="slider-btn" id="prevBtn">←</button>
+            <div class="slider-dots" id="sliderDots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <button class="slider-btn" id="nextBtn">→</button>
         </div>
     </div>
 </section>
@@ -689,13 +278,24 @@
                     <span>New Delhi, India</span>
                 </div>
             </div>
+            <div class="contact-item">
+                <div class="contact-icon">🕐</div>
+                <div>
+                    <p>Working Hours</p>
+                    <span>Mon–Sat, 9AM – 6PM IST</span>
+                </div>
+            </div>
         </div>
         <div class="reveal">
             <div class="contact-form">
-                <input type="text" placeholder="Your Name">
-                <input type="email" placeholder="Your Email">
-                <textarea placeholder="Tell us about your project..."></textarea>
-                <button class="btn-primary" style="width:fit-content;">Send Message →</button>
+                <div class="form-row">
+                    <input type="text" id="fname" placeholder="Your Name">
+                    <input type="email" id="femail" placeholder="Your Email">
+                </div>
+                <input type="text" id="fsubject" placeholder="Subject">
+                <textarea id="fmessage" placeholder="Tell us about your project..."></textarea>
+                <button class="btn-primary" id="sendBtn">Send Message →</button>
+                <p class="form-note">We typically respond within 2–4 hours.</p>
             </div>
         </div>
     </div>
@@ -703,51 +303,19 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="logo">ABC<span>.</span>Tech</div>
-    <p>© 2026 ABC Technologies · All Rights Reserved</p>
+    <div>
+        <div class="logo">ABC<span>.</span>Tech</div>
+        <p class="footer-tagline">Innovating Your Digital Future</p>
+    </div>
+    <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 ABC Technologies · All Rights Reserved</p>
 </footer>
 
-<script>
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => entry.target.classList.add('visible'), i * 80);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
-
-    // Active nav link
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(s => {
-            if (window.scrollY >= s.offsetTop - 200) current = s.id;
-        });
-        navLinks.forEach(a => {
-            a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--accent)' : '';
-        });
-    });
-
-    // Contact form
-    document.querySelector('.btn-primary').addEventListener('click', function() {
-        const inputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
-        let filled = true;
-        inputs.forEach(i => { if (!i.value.trim()) filled = false; });
-        if (filled) {
-            this.textContent = 'Message Sent ✓';
-            this.style.background = '#00c896';
-            setTimeout(() => { this.textContent = 'Send Message →'; this.style.background = ''; inputs.forEach(i => i.value = ''); }, 3000);
-        } else {
-            this.textContent = 'Fill all fields!';
-            this.style.background = '#ff4d6d';
-            setTimeout(() => { this.textContent = 'Send Message →'; this.style.background = ''; }, 2000);
-        }
-    });
-</script>
+<script src="script.js"></script>
 </body>
 </html>
